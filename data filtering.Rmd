@@ -65,6 +65,8 @@ iris_raw %>%
   filter_if(is.numeric, ~ . < 5) ##filter to a single column
 iris_raw %>% 
   filter_if(is.numeric, all_vars( . <5))
+
+
 ```
 
 
