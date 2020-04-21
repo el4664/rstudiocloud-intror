@@ -19,6 +19,8 @@ write_csv(iris, "iris.csv")
 
 ```{r}
 iris_raw = read_csv("iris.csv")
+
+
 ```
 
 ##Exploratory analysis
@@ -69,7 +71,36 @@ iris_raw %>%
 
 ```
 
+```{r}
+iris_raw %>% 
+  select(-Species, Sepal.Length, Petal.Length)
 
+iris_raw %>% 
+  select(Sepal.Length, starts_with("P"), contains("Length")) # Select function using strings or names
+
+iris %>% select_if(is.numeric) ## use select if() to return numeric data from dataset
+
+#Advanced conditions for data selection (select_if()). this is not used for the names  of columns only for their content
+##For instance, what if we wanted only numeric columns with a high degree of variation? We use the ~ to say we’re writing a custom condition and then do an AND that checks if the column is numeric and if the number of unique values in the column is more than 30. You tell the statement where the column of data should go by using the place holder symbol (.).
+
+iris %>% select_if(~is.numeric(.) & n_distinct(.) > 30)
+
+is_v_unique_num <- as_mapper(~is.numeric(.) & n_distinct(.) > 30) #If you are going to use the above condition often then use
+                                                                 # as_mapper() and create a new function
+iris %>% select_if(is_v_unique_num)
+
+
+```
+
+
+```{r}
+install.packages("ggplot2movies")
+
+library(ggplot2movies)
+
+help(ggplot2movies)
+
+```
 
 
 
