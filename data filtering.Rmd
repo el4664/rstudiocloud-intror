@@ -1,0 +1,78 @@
+---
+title: "Data  pipelines"
+output: html_notebook
+---
+
+Data pipelines use the tidyverse style of doing things (ie with pipes!)
+```{r}
+```
+
+
+```{r}
+library(tidyverse)
+```
+```{r}
+write_csv(iris, "iris.csv")
+```
+
+### Read
+
+```{r}
+iris_raw = read_csv("iris.csv")
+```
+
+##Exploratory analysis
+Data explorer package is useful for this analysis
+```{r}
+DataExplorer::create_report(iris_raw, y = "Species") 
+```
+
+##Querying rows ##insert the data in a pipeline
+
+```{r}
+iris_raw %>% 
+  head(10) ##top raws
+tail(10) ## last raws
+
+iris_raw %>% 
+  sample_n(10) #random raws selected
+iris_raw %>% 
+  sample_frac(0.10)
+
+```
+Example: where is a specific species
+
+```{r}
+iris_raw %>% 
+  filter(Species=="setosa", Sepal.Length> 5.5),
+        Sepal.Width<3)
+
+```
+### Combining in R
+
+Equal
+Less / greater than
+Not equal
+And, or
+The return from these is either a TRUE or False
+
+```{r}
+TRUE & FALSE
+```
+
+```{r}
+iris_raw %>% 
+  filter_if(is.numeric, ~ . < 5) ##filter to a single column
+iris_raw %>% 
+  filter_if(is.numeric, (all_vars( . <5))
+```
+
+
+
+
+
+
+
+
+
+
