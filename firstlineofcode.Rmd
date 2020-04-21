@@ -10,6 +10,38 @@ diameter = 12   #Diameter is a variable which equals to 12
 area = pi * (diameter/2)^2
 area
 ```
+```{r}
+diameter = 12
+diameter <- 12
+12 -> diameter
+
+
+c("this is text",
+"this is someone's text",
+'this is  someone\'s text'
+)
+
+bloodtypes <- factor(c("A", "B", "O-", "A+", "O-"))
+sort(bloodtypes)
+
+
+```
+ ## 8.7 R Data type of excercises
+ The class()  function returns metadata 
+ 
+```{r}
+TRUE  # convert true as an integer
+FALSE
+as.integer (TRUE) #as.numeric (TRUE)
+class(Sys.time())
+class(Sys.timezone())
+
+"Do you think this is a game?"
+'No, I think Jenga\'s a game'
+
+
+```
+
 
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
