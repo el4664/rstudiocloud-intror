@@ -1,0 +1,41 @@
+---
+title: "Data science"
+output: html_notebook
+---
+
+Loading data ##session 44
+```{r}
+library(AppliedPredictiveModeling)
+
+data(AlzheimerDisease)
+
+alzheimers <- predictors %>% cbind(diagnosis)
+
+
+```
+
+
+
+
+
+
+
+
+
+```{r}
+library(PASWR)
+data(titanic3)
+view(titanic3)
+library(DataExplorer)
+library(skimr)
+library(xray)
+library(naniar)
+skim(titanic3)
+xray::distributions(titanic3)
+naniar::miss_prop_summary(titanic3)
+
+```
+```{r}
+## FFtrees function tells you about modeling by visualizing:session >50 in the book
+```
+
