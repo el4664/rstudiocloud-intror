@@ -1,0 +1,124 @@
+---
+title: "Recap from day 1"
+output: html_document
+---
+```{r}
+1. Shared/ cloud coding enviroment
+2. Source control
+3. Reproducible research via literate programming
+4. R
+  + package
+  + functions
+  + Data type
+  + Object
+  + Tidyverse paradigm
+  + Logic construct
+```
+
+###Filter  exercises
+
+1. Write a filter that gets all action movies from the movies dataset via the ggplot2movies package
+2. Write a filter that removes films lasting more than 6 hours from the movies dataset
+3. [ADVANCED] Write a filter that checks to see if any of the films don’t have any genres flagged at all
+
+```{r}
+library(tidyverse)
+library(ggplot2movies)
+
+## filter to all action movies
+
+movies %>% 
+  filter(Action == 1)
+
+## Write a filter that removes films lasting more than 6 hours from the movies dataset
+
+movies %>% 
+  filter(length <= 6*60) %>% # 6  hours in minutes
+  summarise(max(length)) # to check if it worked
+
+# no genres
+
+movies %>% 
+  filter_at(vars(Action:Short), all_vars( . == 0)) ->
+  movies_nogenre
+```
+
+###Using select
+
+```{r}
+iris %>% 
+  select_if(is.numeric) %>% 
+  prcomp()
+```
+
+##output movies with a named column
+
+```{r}
+movies %>% 
+  rename(budget_if_known = budget) -> movies_cleaned
+
+movies %>% 
+  select(budget_if_known = budget, everything())
+```
+###Longer pipelines
+
+```{r}
+iris %>% 
+  filter(Species=="Species") %>% ##put the reduction information in the right order
+  select(starts_with("Sepal"))
+```
+###Amending columns (clean them up)
+##mutate function allows us to change columns and create new columns
+```{r}
+iris %>% 
+  mutate(Sepal.Length = Sepal.Length - 0.1,
+Sepal.Area = Sepal.Length * Sepal.Width),
+Species_trun= str_trunc(as,character(Species),3),
+Diff.Sepal.Length=(Sepal.Length -
+                     mean(Sepal.Length))/mean(Sepal.Length))
+
+```
+##Add a column to movies that says how much the length differs from the median
+
+```{r}
+movies %>% 
+  mutate(diff_length=length - median(length)) ->
+  movies_diff
+  
+```
+
+##Aggregating our data
+-groups = group_by
+-aggregation =  summarise
+
+```{r}
+iris %>% 
+  group_by(Species) %>% 
+  summarise(count =  n(), avg.Sepal.Length = mean(Sepal.Length))
+
+iris %>% 
+  group_by(Species) %>% 
+  summarise_all(mean)
+
+
+```
+
+###Exercises
+1. Find the min and max values for length in movies
+2. In a pipeline, find out what proportion of films are Action movies, Action Comedies, Comedies, and neither Action or Comedy
+
+```{r}
+movies %>%
+  summarise(min(length)/60, max(length)/60)
+
+movies %>% 
+  group_by(Action, Comedy) %>% 
+  summarise(n=n()) %>% 
+  ungroup() %>% 
+  mutate(per=n/sum(n)) %>% #chech step
+  #summerise(sum(per))
+  
+```
+
+
+
